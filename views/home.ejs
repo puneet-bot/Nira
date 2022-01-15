@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/layout.css">
 <% if(!locals.userIn){ %>
-    <div>
+    <div class=navbar>
         <a href="/users/sign-in"><button>Sign In</button></a>
         <a href="/users/sign-up"><button>Sign Up</button></a>
     </div>
 <% }else{ %>
-    <div>
+    <div class="navbar">
         <a href="/users/sign-out"><button>Sign Out</button></a>
     
     </div>

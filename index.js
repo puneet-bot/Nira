@@ -1,12 +1,24 @@
-const          express      =       require('express');
-const          app          =       express();
-const          port         =       8000;
-const          layouts      =       require('express-ejs-layouts');
-const          db           =       require('./config/mongoose');
-const          session      =       require('express-session');
-const          cookie       =       require('cookie-parser');
-const          passport     =       require('passport');
-const          passportLocal=       require('./config/passport-local');
+const          express                  =       require('express');
+const          app                      =       express();
+const          port                     =       8000;
+const          layouts                  =       require('express-ejs-layouts');
+const          db                       =       require('./config/mongoose');
+const          session                  =       require('express-session');
+const          cookie                   =       require('cookie-parser');
+const          passport                 =       require('passport');
+const          passportLocal            =       require('./config/passport-local');
+const          sassMiddleware           =      require('node-sass-middleware');
+
+//Scss file specification
+app.use(sassMiddleware({
+    /* Options */
+    src: 'assets/scss'
+  , dest: './assets/css'
+  , debug: true
+  , outputStyle: 'extended'
+  , prefix:  '/css'
+}));
+
 
 //To parse the request(this is a middle ware).
 app.use(express.urlencoded());
