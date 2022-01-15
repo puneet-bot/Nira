@@ -1,4 +1,4 @@
-const Comment  =   require('../models/Comment');
+const Comment  =   require('../models/comment');
 const Post     =   require('../models/post');
 module.exports.create=function(req,res){
     console.log(req.body);
@@ -22,4 +22,14 @@ module.exports.create=function(req,res){
         
     });
     
+}
+
+module.exports.delete=function(req,res){
+    Comment.findById(req.params.id,function(err,comment){
+        if(err){
+            return console.log('ERRor in deleteing a comment.');
+        }
+        comment.remove();
+        return res.redirect('back');
+    })
 }

@@ -4,7 +4,7 @@ const User = require('../models/users');
 // render the sign up page
 module.exports.signUp = function(req, res){
     if(req.isAuthenticated()){
-       return res.redirect('/users/profile');
+       return res.redirect(`/users/profile/${req.user.id}`);
     }
     return res.render('Signup')
 }
@@ -13,14 +13,11 @@ module.exports.signUp = function(req, res){
 // render the sign in page
 module.exports.signIn = function(req, res){
     if(req.isAuthenticated()){
-       return res.redirect('/users/profile');
+       return res.redirect(`/users/profile/${req.user.id}`);
     }
     return res.render('login')
 }
 
-module.exports.profile=function(req,res){
-    return res.render('profile')
-}
 
 // Create or register the user .. 
 module.exports.create = function(req, res){
@@ -43,6 +40,29 @@ module.exports.createSession = function(req, res){
     res.redirect('/')
 }
 
+module.exports.profile=function(req,res){
+    User.findById(req.params.id,function(err,user){
+        if(err)
+            return console.log('error in finding profile users');
+        else{
+            return res.render('profile',{
+                profile:user
+            });
+        }
+    })
+    
+}
+module.exports.edit=function(req,res){
+    User.findById(req.params.id,function(err,user){
+        if(err)
+            return console.log('error in finding edit profile users');
+        else{
+            user.name=req.body.name;
+            user.save();
+            return res.redirect('back');
+        }
+    })
+}
 module.exports.destroySession=function(req,res){
     req.logout();
     return res.redirect('/');

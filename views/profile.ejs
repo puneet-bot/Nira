@@ -1,1 +1,25 @@
+<% if(!locals.userIn){ %>
+    <div class=navbar>
+        <a href="/users/sign-in"><button>Sign In</button></a>
+        <a href="/users/sign-up"><button>Sign Up</button></a>
+    </div>
+<% }else{ %>
+    <div class="navbar">
+        <a href="/users/sign-out"><button>Sign Out</button></a>
+        <a href="/"><button>Feed</button></a>
+    </div>
+<%}%>
+
+
 <h1>Hello this is your profile</h1>
+<h2>Name:       <%=profile.name%></h2>
+<h2>Email:      <%=profile.email%></h2>
+
+
+<%if(locals.userIn.id==profile._id){%>
+    <h3>Edit your profile here</h3>
+    <form method="post" action="/users/update/<%=profile._id%>">
+        <input type="text" name="name" placeholder="Edt your name">
+        <input type="submit" placeholder="Edit">
+    </form>
+<%}%>
