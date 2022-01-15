@@ -1,2 +1,15 @@
 <link rel="stylesheet" href="css/style.css">
+<% if(!locals.userIn){ %>
+    <div>
+        <a href="/users/sign-in"><button>Sign In</button></a>
+        <a href="/users/sign-up"><button>Sign Up</button></a>
+    </div>
+<% }else{ %>
+    <div>
+        <a href="/users/sign-out"><button>Sign Out</button></a>
+    
+    </div>
+<%}%>
+
+
 <h1>Hello Welcome to Nira!</h1>
