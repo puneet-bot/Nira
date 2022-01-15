@@ -8,6 +8,8 @@ router.get('/',homeController.home);
 router.post('/',homeController.post);
 //if users hit /users then we will require the user under routes
 router.use('/users',require('./user'));
+router.use('/post',require('./post.js'));
+router.use('/comment',require('./comment'));
 
 
 module.exports=router;

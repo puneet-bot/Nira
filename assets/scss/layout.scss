@@ -22,5 +22,17 @@ body{
             }
         }
     }
+
+    aside{
+        width: 10%;
+        display: inline-block;
+        vertical-align: top;
+        border-left: 2px solid black;
+    }
+    main{
+        width: 89%;
+        display: inline-block;
+        vertical-align: top;
+    }
     
 }
