@@ -20,19 +20,20 @@ module.exports.signIn = function(req, res){
 
 
 // Create or register the user .. 
-module.exports.create = function(req, res){
-    // console.log('Registering the user',req.body);
+module.exports.create =async function(req, res){
+    try{
         if (req.body.password != req.body.confirmPassword){
             console.log('not match password..');
             return res.redirect('back');
         }
-        User.findOne({email: req.body.email},function(user){
-            if (!user){
-                let createUser=  User.create(req.body);
-            }
-            return res.redirect('/users/sign-in');
-        });
-        
+        let user= await User.findOne({email: req.body.email});
+        if (!user){
+                let createUser= await User.create(req.body);
+        }
+        return res.redirect('/users/sign-in');
+    }catch(err){
+        req.flash('error','error in creating user');
+    }
 }
 
 // sign in and create a session for the user
@@ -41,28 +42,27 @@ module.exports.createSession = function(req, res){
     res.redirect('/')
 }
 
-module.exports.profile=function(req,res){
-    User.findById(req.params.id,function(err,user){
-        if(err)
-            return console.log('error in finding profile users');
-        else{
-            return res.render('profile',{
-                profile:user
-            });
-        }
-    })
+module.exports.profile=async function(req,res){
+    try{
+        let user=await User.findById(req.params.id);
+        return res.render('profile',{
+            profile:user
+        });
+    }catch(err){
+        req.flash('success','Signed out successfully');
+    }
+
     
 }
-module.exports.edit=function(req,res){
-    User.findById(req.params.id,function(err,user){
-        if(err)
-            return console.log('error in finding edit profile users');
-        else{
-            user.name=req.body.name;
-            user.save();
-            return res.redirect('back');
-        }
-    })
+module.exports.edit=async function(req,res){
+    try{
+        let user= await User.findById(req.params.id);
+        user.name=req.body.name;
+        user.save();
+        return res.redirect('back');
+    }catch(err){
+        return req.flash('error','error in finding edit profile users');
+    }
 }
 module.exports.destroySession=function(req,res){
     req.logout();
