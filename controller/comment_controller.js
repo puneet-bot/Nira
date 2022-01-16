@@ -16,7 +16,7 @@ module.exports.create=async function(req,res){
     }catch(err){
         req.flash('error','error in posting comment')
         return res.redirect('/');
-    }
+    } 
     return res.redirect('/');
     
 }
