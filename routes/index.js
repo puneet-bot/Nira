@@ -5,7 +5,6 @@ const               homeController      =         require('../controller/home_co
 
 //The path till now here is '/'
 router.get('/',homeController.home);
-router.post('/',homeController.post);
 //if users hit /users then we will require the user under routes
 router.use('/users',require('./user'));
 router.use('/post',require('./post'));

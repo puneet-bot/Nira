@@ -17,7 +17,7 @@ module.exports.home=(req,res)=>{
     })
     .exec(function(err,posts){
         if(err)
-            console.log('error in finding all posts',err);
+            req.flash('error','error in finding all posts',err);
         else{
             User.find({},function(err,users){
                 res.render('home',{
@@ -28,8 +28,4 @@ module.exports.home=(req,res)=>{
             
         }
     })
-}
-
-module.exports.post=function(req,res){
-    console.log(req.body);
 }

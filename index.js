@@ -8,6 +8,9 @@ const          passport                 =       require('passport');
 const          passportLocal            =       require('./config/passport-local');
 const          sassMiddleware           =       require('node-sass-middleware');
 const          mongoStore               =       require('connect-mongo');
+const          myMiddleware             =       require('./config/middleware');
+const          flash                    =       require('connect-flash');
+
 
 
 //Scss file specification
@@ -59,6 +62,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+//flash use
+app.use(flash());
+app.use(myMiddleware.setFlash);
 
 
 //Establishing link to handle all the routes.

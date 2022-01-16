@@ -7,9 +7,9 @@ module.exports.create=function(req,res){
         user:req.user._id
     },function(err,post){
         if(err)
-            console.log('error in creating a post');
+            req.flash('error','error in creating a post');
         else{
-            console.log('Post Created Successfully.');
+            req.flash('success','Post Created Successfully.');
             return res.redirect('/');
         }
     })
@@ -18,9 +18,10 @@ module.exports.create=function(req,res){
 module.exports.delete=function(req,res){
     Post.findById(req.params.id,function(err,post){
         if(err){
-            return console.log('ERRor in deleteing a comment.');
+            return req.flash('error','ERRor in deleteing a comment.');
         }
         post.remove();
+        req.flash('success','Deleted Post');
         Comment.deleteMany({post:req.params.id});
         res.redirect('back');
     });
