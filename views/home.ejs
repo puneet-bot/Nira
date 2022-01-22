@@ -14,45 +14,18 @@
 
 <h1>Hello Welcome to Nira!</h1>
 <% if(locals.userIn){ %>
-<div>
-    <form action="/post/create" method="post">
+    <form action="/post/create" method="post" id="new-form-post">
         <textarea name="content" id="" cols="30" rows="10" placeholder="what's in your mind?"></textarea>
         <input type="submit" value="Post">
     </form>
 <%}%>
 <main>
-    <%for(posts of post){%>
-            <div id="post<%=posts.id%>">
-                <%if(locals.userIn && locals.userIn.id==posts.user.id){%>
-                    <form method="post" action="/post/destroy/<%=posts._id%>">
-                    <a><button>Delete Post</button></a>
-                    </form>
-                <%}%>
-                <div><%= posts.post %></div>
-                <div>Created By - <%= posts.user.name %></div>
-                <form action="/comment/create" method="post">
-                    <input type="text" name="comment" placeholder="Add your Comment">
-                    <input type="hidden" name="postId" value="<%=posts.id%>">
-                    <input type="submit" value="Post">
-                </form>
-                <div id="comments-container">
-                    <%for(comments of posts.comment){%>
-                        <%if(locals.userIn && locals.userIn.id==comments.user.id){%>
-                            <form method="post" action="/comment/destroy/<%=comments._id%>">
-                                <a><button>Delete Comment</button></a>
-                            </form>
-                        <%}%>
-                        <div></div>
-                        <div><%= comments.content %> - [Posted by<%=comments.user.name%>]</div>
-                    <%}%>
-                </div>
-            </div>
-    <%}%>
+    <div id="post-container">
+        <%-include('posts')-%>
+    </div>
 </main>
 <aside>
     <%for(users of all_users){%>
             <div><a href="users/profile/<%=users._id%>"><%= users.name %></a></div>
     <%}%>
 </aside>
-
-</div>

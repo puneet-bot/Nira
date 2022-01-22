@@ -5,7 +5,7 @@ const               passport            =         require('passport');
 
 
 router.post('/create', passport.checkAuthentication ,commentController.create);
-router.post('/destroy/:id', passport.checkAuthentication ,commentController.delete);
+router.get('/destroy/:id', passport.checkAuthentication ,commentController.delete);
 
 
 module.exports=router;

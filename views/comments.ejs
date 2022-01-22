@@ -1,0 +1,9 @@
+<%for(comments of posts.comment){%>
+    <div id="my-comment-<%=comments._id%>">
+        <%if(locals.userIn && locals.userIn.id==comments.user.id){%>
+                <a href="/comment/destroy/<%=comments._id%>" class="delete-comment-button"><button>Delete Comment</button></a>
+        <%}%>
+        <div></div>
+        <div><%= comments.content %> - [Posted by<%=comments.user.name%>]</div>
+    </div>
+<%}%>
