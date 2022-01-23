@@ -17,9 +17,13 @@
 
 
 <%if(locals.userIn.id==profile._id){%>
-    <h3>Edit your profile here</h3>
-    <form method="post" action="/users/update/<%=profile._id%>">
-        <input type="text" name="name" placeholder="Edt your name">
-        <input type="submit" placeholder="Edit">
-    </form>
+        <img src="<%=profile.avatar%>" alt="<%=profile.name%>">
+
+        <form action="/users/update/<%=profile.id%>" enctype="multipart/form-data" method="POST">
+            <h1>Edit Your Profile</h1>
+            <input type="text" name="name" placeholder="your name" value="<%=profile.name%>" required>
+            <input type="text" name="email" placeholder="your email" value="<%=profile.email%>" required>
+            <input type="file" name="avatar" placeholder="your profile image">
+            <input type="submit" value="update">
+        </form>
 <%}%>

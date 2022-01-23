@@ -1,5 +1,6 @@
 const User = require('../models/users');
-
+const fs=require('fs');
+const path=require('path');
 
 // render the sign up page
 module.exports.signUp = function(req, res){
@@ -55,13 +56,33 @@ module.exports.profile=async function(req,res){
     
 }
 module.exports.edit=async function(req,res){
-    try{
-        let user= await User.findById(req.params.id);
-        user.name=req.body.name;
-        user.save();
-        return res.redirect('back');
-    }catch(err){
-        return req.flash('error','error in finding edit profile users');
+    if(req.user.id==req.params.id){
+        try{
+            let user= await User.findById(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){
+                    return console.log('***MULTER Error',err);
+                }
+                user.name=req.body.name;
+                user.email=req.body.email;
+                if(req.file){
+                    if(user.avatar){
+                      fs.unlinkSync(path.join(__dirname,'..',user.avatar))   
+                    }
+                    user.avatar=User.avatarPath+'/'+req.file.filename;
+                }
+                req.flash("Updated Successfully.")
+                user.save();
+                return res.redirect('back');
+            })
+
+        }catch(err){
+            req.flash(err);
+            console.log("hhh",err)
+            return res.redirect('back');
+        }
+    }else{
+        return res.status(401).send('unauthorized');
     }
 }
 module.exports.destroySession=function(req,res){

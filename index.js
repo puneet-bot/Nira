@@ -31,6 +31,10 @@ app.use(express.urlencoded());
 // To mention that all the static files will be in assets folder
 app.use(express.static('./assets'));
 
+//To save the image files of the user.
+app.use('/uploads',express.static(__dirname+'/uploads'));
+
+
 //Using Express-ejs-layout feature 
 app.use(layouts);
 // extract style and scripts from sub pages into the layout
